@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">AndroidRoomExample</string>
+    <string name="button_name">Click for view</string>
+</resources>
