@@ -8,8 +8,10 @@ import android.support.annotation.NonNull;
 @Entity
 public class Student {
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private Integer id;
     @ColumnInfo(name = "student_id")
-    private Integer studentId;
+    private String studentId;
     @ColumnInfo(name = "student_name")
     private String studentName;
     @ColumnInfo(name = "student_age")
@@ -17,12 +19,19 @@ public class Student {
     @ColumnInfo(name = "student_country")
     private String studentCountry;
 
-    @NonNull
-    public Integer getStudentId() {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(@NonNull Integer studentId) {
+    public void setStudentId(String studentId) {
         this.studentId = studentId;
     }
 

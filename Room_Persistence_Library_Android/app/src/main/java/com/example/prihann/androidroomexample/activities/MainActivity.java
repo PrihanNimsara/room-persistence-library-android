@@ -6,9 +6,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.prihann.androidroomexample.DatabaseInitializer;
 import com.example.prihann.androidroomexample.R;
 import com.example.prihann.androidroomexample.database.AppDatabase;
-import com.example.prihann.androidroomexample.database.DatabaseManager;
 import com.example.prihann.androidroomexample.model.Student;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,16 +18,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        appDatabase = DatabaseManager.getInstance().getAppDatabase();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                insertValues();
-
-
-            }
-        }).start();
 
 
         Button button = findViewById(R.id.button);
@@ -37,8 +28,7 @@ public class MainActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        getData();
-
+                   insertValues();
 
                     }
                 }).start();
@@ -47,17 +37,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void insertValues() {
-        Student student = new Student();
-        student.setStudentName("Prihan");
-        student.setStudentAge(22);
-        student.setStudentCountry("Sri Lanka");
-        appDatabase.studentDao().insertStudentObject(student);
+        DatabaseInitializer.populateAsync(AppDatabase.getAppDatabase(this));
     }
 
 
-    private void getData() {
-        Student student = appDatabase.studentDao().getStudentUsingStudentId(1);
-        Log.d("log", student.getStudentName());
-    }
+
 
 }
