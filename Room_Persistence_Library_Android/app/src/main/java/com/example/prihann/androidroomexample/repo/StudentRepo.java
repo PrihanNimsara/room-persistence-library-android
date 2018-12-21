@@ -12,65 +12,93 @@ public class StudentRepo implements Crud {
     private AppDatabase appDatabase;
 
     public StudentRepo(Context context) {
-        this.appDatabase = AppDatabase.getAppDatabase(context);
+        this.appDatabase = AppDatabase.getAppDatabaseInstance(context);
     }
 
     @Override
-    public int create(Object item) {
-        SetUsersAsyncTask getUsersAsyncTask = new SetUsersAsyncTask((Student)item);
-        getUsersAsyncTask.execute();
-        return 0;
-    }
-
-    @Override
-    public int update(Object item) {
-        return 0;
-    }
-
-    @Override
-    public int delete(Object item) {
-        return 0;
-    }
-
-    @Override
-    public List<Student> findAll() {
-        try {
-            return new GetUsersAsyncTask().execute().get();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+    public Boolean create(Object item) {
+        InsertStudentAsyncTask insertStudentAsyncTask = new InsertStudentAsyncTask((Student)item);
+        insertStudentAsyncTask.execute();
         return null;
     }
 
+    @Override
+    public Boolean update(Object item) {
+        UpdateStudentAsyncTask updateStudentAsyncTask = new UpdateStudentAsyncTask((Student)item);
+        updateStudentAsyncTask.execute();
+        return null;
+    }
 
-    private class SetUsersAsyncTask extends AsyncTask<Void, Void, Void> {
+    @Override
+    public Boolean delete(Object item) {
+        return null;
+    }
+
+    @Override
+    public List<?> findAll() {
+        try {
+            return new FindUsersAsyncTask().execute().get();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+        }
+
+    private class InsertStudentAsyncTask extends AsyncTask<Void, Void, Void> {
 
         Student student = null;
 
-        public SetUsersAsyncTask(Student student) {
+        public InsertStudentAsyncTask(Student student) {
             this.student = student;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
 
-            appDatabase.studentDao().insertOnlySingleStudent(student);
+            appDatabase.studentDao().insert(student);
             return null;
         }
     }
 
-    private class GetUsersAsyncTask extends AsyncTask<Void, Void, List<Student>> {
+    private class FindUsersAsyncTask extends AsyncTask<Void, Void, List<Student>> {
 
 
-        public GetUsersAsyncTask() {
+        public FindUsersAsyncTask() {
 
         }
-
 
         @Override
         protected List<Student> doInBackground(Void... voids) {
             return appDatabase.studentDao().getAllStudents();
+        }
+    }
+
+    private class UpdateStudentAsyncTask extends AsyncTask<Void, Void, Void> {
+        private Student student;
+
+        public UpdateStudentAsyncTask(Student student) {
+            this.student = student;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+             appDatabase.studentDao().update(student);
+            return null;
+        }
+    }
+
+    private class DeleteStudentAsyncTask extends AsyncTask<Void,Void,Void>{
+        Student student;
+
+        public DeleteStudentAsyncTask(Student student) {
+            this.student = student;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            appDatabase.studentDao().delete(student);
+            return null;
         }
     }
 }

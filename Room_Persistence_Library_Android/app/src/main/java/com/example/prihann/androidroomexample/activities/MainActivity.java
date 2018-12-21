@@ -1,5 +1,6 @@
 package com.example.prihann.androidroomexample.activities;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,13 +15,13 @@ import com.example.prihann.androidroomexample.repo.StudentRepo;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private AppDatabase appDatabase;
+   private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        context = getApplicationContext();
 
 
         Button button = findViewById(R.id.button);
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 private void readdata(){
-    List<Student> studentList = new StudentRepo(this).findAll();
+    List<Student> studentList = (List<Student>) new StudentRepo(context).findAll();
     for(Student s: studentList)
         Log.d("padma","ddddddddddddddddddddddddddddddddd"+s.getStudentName());
 }

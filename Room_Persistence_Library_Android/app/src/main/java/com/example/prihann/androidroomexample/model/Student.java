@@ -57,4 +57,15 @@ public class Student {
     public void setStudentCountry(String studentCountry) {
         this.studentCountry = studentCountry;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", studentId='" + studentId + '\'' +
+                ", studentName='" + studentName + '\'' +
+                ", studentAge=" + studentAge +
+                ", studentCountry='" + studentCountry + '\'' +
+                '}';
+    }
 }

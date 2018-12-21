@@ -12,7 +12,7 @@ import com.example.prihann.androidroomexample.model.Student;
 import java.util.List;
 
 @Dao
-public interface StudentDao {
+public interface StudentDao extends BaseDao<Student>{
     @Query("SELECT * FROM student")
     List<Student> getAllStudents();
 
@@ -21,21 +21,4 @@ public interface StudentDao {
 
     @Query("SELECT COUNT(*) from student")
     int countStudents();
-
-    @Insert
-    void insertMultipleStudent(Student... students);
-
-    @Insert
-    void insertMultipleListStudent(List<Student> studentList);
-
-    @Transaction
-    @Insert
-    void insertOnlySingleStudent(Student student);
-
-    @Delete
-    void deleteStudent(Student student);
-
-    @Update
-    void updateStudent(Student student);
-
 }

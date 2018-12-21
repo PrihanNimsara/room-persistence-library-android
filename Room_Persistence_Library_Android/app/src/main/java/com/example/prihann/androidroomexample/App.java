@@ -2,7 +2,7 @@ package com.example.prihann.androidroomexample;
 
 import android.app.Application;
 
-public class RoomExample extends Application {
+public class App extends Application {
 
     @Override
     public void onCreate() {

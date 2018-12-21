@@ -15,18 +15,19 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract StudentDao studentDao();
 
-    public static AppDatabase getAppDatabase(Context context) {
+    public static AppDatabase getAppDatabaseInstance(Context context) {
         if (appDatabaseInstance == null) {
-            appDatabaseInstance =
-                    Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "app_database")
-                            .allowMainThreadQueries()
-                            .build();
+            appDatabaseInstance = Room
+                    .databaseBuilder(context.getApplicationContext(), AppDatabase.class, "app_database_name")
+                    .allowMainThreadQueries()
+                    .build();
         }
         return appDatabaseInstance;
     }
 
     public static void destroyAppDatabaseInstance() {
-        if(appDatabaseInstance !=null)
-        appDatabaseInstance = null;
+        if (appDatabaseInstance != null) {
+            appDatabaseInstance = null;
+        }
     }
 }
