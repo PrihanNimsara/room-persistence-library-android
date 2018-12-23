@@ -31,6 +31,8 @@ public class StudentRepo implements Crud {
 
     @Override
     public Boolean delete(Object item) {
+        DeleteStudentAsyncTask deleteStudentAsyncTask = new DeleteStudentAsyncTask((Student)item);
+        deleteStudentAsyncTask.execute();
         return null;
     }
 
