@@ -2,6 +2,7 @@ package com.example.prihann.androidroomexample.repo;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
 import com.example.prihann.androidroomexample.database.AppDatabase;
 import com.example.prihann.androidroomexample.model.Student;
 
@@ -17,21 +18,21 @@ public class StudentRepo implements Crud {
 
     @Override
     public Boolean create(Object item) {
-        InsertStudentAsyncTask insertStudentAsyncTask = new InsertStudentAsyncTask((Student)item);
+        InsertStudentAsyncTask insertStudentAsyncTask = new InsertStudentAsyncTask((Student) item);
         insertStudentAsyncTask.execute();
         return null;
     }
 
     @Override
     public Boolean update(Object item) {
-        UpdateStudentAsyncTask updateStudentAsyncTask = new UpdateStudentAsyncTask((Student)item);
+        UpdateStudentAsyncTask updateStudentAsyncTask = new UpdateStudentAsyncTask((Student) item);
         updateStudentAsyncTask.execute();
         return null;
     }
 
     @Override
     public Boolean delete(Object item) {
-        DeleteStudentAsyncTask deleteStudentAsyncTask = new DeleteStudentAsyncTask((Student)item);
+        DeleteStudentAsyncTask deleteStudentAsyncTask = new DeleteStudentAsyncTask((Student) item);
         deleteStudentAsyncTask.execute();
         return null;
     }
@@ -40,15 +41,15 @@ public class StudentRepo implements Crud {
     public List<?> findAll() {
         try {
             return new FindUsersAsyncTask().execute().get();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
-        }
+    }
 
     private class InsertStudentAsyncTask extends AsyncTask<Void, Void, Void> {
 
-        Student student = null;
+        Student student;
 
         public InsertStudentAsyncTask(Student student) {
             this.student = student;
@@ -63,10 +64,7 @@ public class StudentRepo implements Crud {
     }
 
     private class FindUsersAsyncTask extends AsyncTask<Void, Void, List<Student>> {
-
-
         public FindUsersAsyncTask() {
-
         }
 
         @Override
@@ -84,12 +82,12 @@ public class StudentRepo implements Crud {
 
         @Override
         protected Void doInBackground(Void... voids) {
-             appDatabase.studentDao().update(student);
+            appDatabase.studentDao().update(student);
             return null;
         }
     }
 
-    private class DeleteStudentAsyncTask extends AsyncTask<Void,Void,Void>{
+    private class DeleteStudentAsyncTask extends AsyncTask<Void, Void, Void> {
         Student student;
 
         public DeleteStudentAsyncTask(Student student) {
@@ -98,7 +96,6 @@ public class StudentRepo implements Crud {
 
         @Override
         protected Void doInBackground(Void... voids) {
-
             appDatabase.studentDao().delete(student);
             return null;
         }
